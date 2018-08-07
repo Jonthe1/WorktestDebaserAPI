@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Debaser.Models.DebaserData>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Deltagare</th>
+            <th>Datum</th>
+            <th>Beskrivning</th>
+            <th>Åldersgräns</th>
+            <th>Öppettid</th>
+            <th>Pris</th>
+            <th>Debaser</th>
+            <th>Plats</th>
+            <th>Tags</th>
+            <th>Köp biljetter på</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var data in Model)
+        {
+
+            <tr>
+                <td>@data.Event</td>
+                <td>@data.SubHead</td>
+                <td>@data.EventDate</td>
+                <td>@data.Description</td>
+                <td>@data.Age</td>
+                <td>@data.Open</td>
+                <td>@data.Admission</td>
+                <td>@data.Venue</td>
+                <td>@data.Room</td>
+                <td>@data.Tags</td>
+                <td>@data.TicketUrl</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
