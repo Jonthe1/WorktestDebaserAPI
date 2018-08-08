@@ -1,0 +1,13 @@
+﻿@model Debaser.Models.DebaserData
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>@Model.Event</h1>
+    <p class="lead">@Model.SubHead</p>
+    <p><a href="@Model.TicketUrl" class="btn btn-primary btn-lg">Köp biljett &raquo;</a></p>
+</div>
+
+

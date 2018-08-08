@@ -5,41 +5,48 @@
 }
 
 <h2>Index</h2>
-
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Event</th>
-            <th>Deltagare</th>
-            <th>Datum</th>
-            <th>Beskrivning</th>
-            <th>Åldersgräns</th>
-            <th>Öppettid</th>
-            <th>Pris</th>
-            <th>Debaser</th>
-            <th>Plats</th>
-            <th>Tags</th>
-            <th>Köp biljetter på</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var data in Model)
-        {
-
+@if (!Model.Any())
+{
+    <p>Det fanns inga spelningar att se mellan de tidsspannen du valde</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>@data.Event</td>
-                <td>@data.SubHead</td>
-                <td>@data.EventDate</td>
-                <td>@data.Description</td>
-                <td>@data.Age</td>
-                <td>@data.Open</td>
-                <td>@data.Admission</td>
-                <td>@data.Venue</td>
-                <td>@data.Room</td>
-                <td>@data.Tags</td>
-                <td>@data.TicketUrl</td>
+                <th>Event</th>
+                <th>Deltagare</th>
+                <th>Datum</th>
+                <th>Åldersgräns</th>
+                <th>Öppettid</th>
+                <th>Pris</th>
+                <th>Debaser</th>
+                <th>Plats</th>
+                <th>Tags</th>
+                <th>Köp biljetter på</th>
+                <th>Nummer</th>
             </tr>
+        </thead>
+        <tbody>
+            @{ int i = 0;}
+            @foreach (var data in Model)
+            {
 
-        }
-    </tbody>
-</table>
+                <tr>
+                    <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), data }, null) </td>
+                    <td>@data.SubHead</td>
+                    <td>@data.EventDate</td>
+                    <td>@data.Age</td>
+                    <td>@data.Open</td>
+                    <td>@data.Admission</td>
+                    <td>@data.Venue</td>
+                    <td>@data.Room</td>
+                    <td>@data.Tags</td>
+                    <td>@data.TicketUrl</td>
+                    <td> @i </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}
