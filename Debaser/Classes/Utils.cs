@@ -16,16 +16,14 @@ namespace Debaser.Classes
 
         public static string ReplaceHTMLMarkup(string input)
         {
-            var newString = Regex.Replace(input, @"<[^>]+>|&nbsp;", " ");
-            return newString;
+            string newString;
+            return input != null ? newString = Regex.Replace(input, @"<[^>]+>|&nbsp;", " ") : input;
         }
 
         public static string ReplaceSpecialCharacters(string input)
         {
-            var newString = Regex.Replace(input, "[^a-zA-Z.]+", " ");
-            return newString;
+            string newString;
+            return input != null ? newString = Regex.Replace(input, "[^a-zA-Z.]+", " ") : input;
         }
-
-
     }
 }
