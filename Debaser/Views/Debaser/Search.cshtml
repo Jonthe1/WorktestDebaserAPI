@@ -11,19 +11,29 @@
     <div class="form-group">
         @Html.LabelFor(d => d.FromDate)
         @Html.TextBoxFor(d => d.FromDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(d => d.FromDate)
     </div>
     <div class="form-group">
         @Html.LabelFor(d => d.ToDate)
         @Html.TextBoxFor(d => d.ToDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(d => d.ToDate)
+
     </div>
     <div class="form-group">
         @Html.LabelFor(d => d.Location)
         @Html.DropDownListFor(d => d.Location, new List<SelectListItem>
         {
-           new SelectListItem{ Text = "Strand och Medis", Value = "" },
+           new SelectListItem{ Text = "Samtliga Debaser", Value = "1" },
            new SelectListItem{ Text = "Strand", Value = "strand" },
-           new SelectListItem{ Text = "Medis", Value = "medis" }
+           new SelectListItem{ Text = "Medis", Value = "medis" },
+           new SelectListItem{ Text = "Malmö", Value = "malmo" },
+
         }, "Välj Plats", new { @class = "form-control" })
+        @Html.ValidationMessageFor(d => d.Location)
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }

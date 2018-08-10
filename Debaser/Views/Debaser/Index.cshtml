@@ -1,17 +1,17 @@
-﻿@model IEnumerable<Debaser.Models.DebaserData>
+﻿@model Debaser.ViewModels.DebaserDataViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-@if (!Model.Any())
+<h2>Spelningar från @Model.SearchedFromDate till @Model.SearchedToDate vid @Model.SearchedLocation</h2>
+@if (!Model.EventList.Any())
 {
     <p>Det fanns inga spelningar att se mellan de tidsspannen du valde</p>
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="spelningar">
         <thead>
             <tr>
                 <th>Event</th>
@@ -24,16 +24,16 @@ else
                 <th>Plats</th>
                 <th>Tags</th>
                 <th>Köp biljetter på</th>
+                <th>Beskrivning</th>
                 <th>Nummer</th>
             </tr>
         </thead>
         <tbody>
-            @{ int i = 0;}
-            @foreach (var data in Model)
+            @{ int i = 0; }
+            @foreach (var data in Model.EventList)
             {
-
-                <tr>
-                    <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), data }, null) </td>
+                <tr id="@data.EventId">
+                    <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), fromDate = Model.SearchedFromDate, toDate = Model.SearchedToDate, location = Model.SearchedLocation }, null) </td>
                     <td>@data.SubHead</td>
                     <td>@data.EventDate</td>
                     <td>@data.Age</td>
@@ -43,10 +43,25 @@ else
                     <td>@data.Room</td>
                     <td>@data.Tags</td>
                     <td>@data.TicketUrl</td>
+                    <td>@data.Description</td>
                     <td> @i </td>
                 </tr>
                 i++;
             }
         </tbody>
     </table>
+}
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+            $("#spelningar").DataTable();
+
+            $('#spelningar').on('click', 'tr', function () {
+ 
+            });
+        });
+
+    </script>
 }

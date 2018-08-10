@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace Debaser.Models
 {
-    
     public class DebaserData
     {
-        
         public string EventId { get; set; }
-        [Required]
         public string EventDate { get; set; }
         public string Club { get; set; }
         public string EventStatus { get; set; }
@@ -30,6 +28,5 @@ namespace Debaser.Models
         public string ImageUrl { get; set; }
         public string TicketUrl { get; set; }
         public string EventUrl { get; set; }
-
     }
 }

@@ -8,6 +8,9 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+//using AutoMapper;
+//using Debaser.App_Start;
+
 
 namespace Debaser
 {
@@ -15,6 +18,7 @@ namespace Debaser
     {
         protected void Application_Start()
         {
+            //Mapper.Initialize(c => c.AddProfile<MappingProfile>());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
