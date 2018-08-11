@@ -12,8 +12,6 @@ namespace Debaser
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/datatables/jquery.datatables.js",
                         "~/Scripts/datatables/datatables.bootstrap.js",
-                       // "~/Scripts/datatables/datatables.responsive.js",
-                       // "~/Scripts/datatables/responsive.bootstrap.js",
                         "~/Script/bootbox.js"
                         ));
 
@@ -32,7 +30,6 @@ namespace Debaser
                       "~/Content/bootstrap-lumen.css",
                       "~/Content/site.css",
                       "~/Content/datatables/css/datatables.bootstrap.css"
-                      //"~/Content/datatables/css/responsive.bootstrap.css"
                       ));
         }
     }

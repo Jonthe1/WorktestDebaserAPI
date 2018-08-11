@@ -20,29 +20,31 @@ namespace Debaser.Controllers
         // GET: Debaser
         public ActionResult Index()
         {
-            var debaserData = new DebaserDataViewModel();
+            var debaserData = new DebaserDataViewModel() {
+                EventList = new List<DebaserData>()
+            };
             return View(debaserData);
 
         }
 
 
         [HttpPost]
-        public ViewResult Search(DebaserDataSearch searchedData)
+        public ViewResult Search(DebaserDataViewModel searchedData)
         {
             if (!ModelState.IsValid) // Validate data. Return to search if not valid
-                return View("Search");
+                return View("Index");
 
-                var fromDate = Convert.ToDateTime(searchedData.FromDate).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-            var toDate = Convert.ToDateTime(searchedData.ToDate).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-            var location = IsBothLocationsSelected(searchedData.Location); // To check if empty string should be returned or not
+            var fromDate = Convert.ToDateTime(searchedData.SearchData.FromDate).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+            var toDate = Convert.ToDateTime(searchedData.SearchData.ToDate).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+            var location = IsBothLocationsSelected(searchedData.SearchData.Location); // To check if empty string should be returned or not
             List<DebaserData> debaserData = GetDebaserData.GetDebaserDataBasedOnParameters(location, fromDate, toDate);
 
             var debaserDataViewModel = new DebaserDataViewModel()
             {
                 EventList = debaserData,
-                SearchedFromDate = searchedData.FromDate,
-                SearchedToDate = searchedData.ToDate,
-                SearchedLocation = IsBothLocationsSelected(searchedData.Location)
+                SearchedFromDate = searchedData.SearchData.FromDate,
+                SearchedToDate = searchedData.SearchData.ToDate,
+                SearchedLocation = IsBothLocationsSelected(searchedData.SearchData.Location)
             };
 
             return View("Index", debaserDataViewModel);

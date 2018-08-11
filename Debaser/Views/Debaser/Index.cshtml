@@ -3,61 +3,92 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    var fromDate = Convert.ToDateTime(Model.SearchedFromDate).ToString("yyyy/MM/dd");
+    var toDate = Convert.ToDateTime(Model.SearchedToDate).ToString("yyyy/MM/dd");
+}
 
-<h2>Spelningar från @Model.SearchedFromDate till @Model.SearchedToDate vid @Model.SearchedLocation</h2>
-@if (!Model.EventList.Any())
-{
-    <p>Det fanns inga spelningar att se mellan de tidsspannen du valde</p>
-}
-else
-{
-    <table class="table table-bordered table-hover" id="spelningar">
-        <thead>
-            <tr>
-                <th>Event</th>
-                <th>Deltagare</th>
-                <th>Datum</th>
-                <th>Åldersgräns</th>
-                <th>Öppettid</th>
-                <th>Pris</th>
-                <th>Debaser</th>
-                <th>Plats</th>
-                <th>Tags</th>
-                <th>Köp biljetter på</th>
-                <th>Nummer</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ int i = 0; }
-            @foreach (var data in Model.EventList)
+<div>
+    @using (Html.BeginForm("Search", "Debaser", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(d => d.SearchData.FromDate)
+            @Html.TextBoxFor(d => d.SearchData.FromDate, new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.SearchData.FromDate)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(d => d.SearchData.ToDate)
+            @Html.TextBoxFor(d => d.SearchData.ToDate, new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.SearchData.ToDate)
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(d => d.SearchData.Location)
+            @Html.DropDownListFor(d => d.SearchData.Location, new List<SelectListItem>
             {
-                <tr id="@data.EventId">
-                    <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), fromDate = Model.SearchedFromDate, toDate = Model.SearchedToDate, location = Model.SearchedLocation }, null) </td>
-                    <td>@data.SubHead</td>
-                    <td>@data.EventDate</td>
-                    <td>@data.Age</td>
-                    <td>@data.Open</td>
-                    <td>@data.Admission</td>
-                    <td>@data.Venue</td>
-                    <td>@data.Room</td>
-                    <td>@data.Tags</td>
-                    <td>@data.TicketUrl</td>
-                    <td> @i </td>
+               new SelectListItem{ Text = "Samtliga Debaser", Value = "1" },
+               new SelectListItem{ Text = "Strand", Value = "strand" },
+               new SelectListItem{ Text = "Medis", Value = "medis" },
+               new SelectListItem{ Text = "Malmö", Value = "malmo" },
+
+            }, "Välj Plats", new { @class = "form-control" })
+            @Html.ValidationMessageFor(d => d.SearchData.Location)
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    }
+</div>
+
+<div style="background-color:gray; width: 1000px; position: absolute; top: 100px; right: 100px;">
+
+    @if (Model.SearchedLocation != "")
+    {
+        <h3>Visar spelningar från @fromDate till @toDate vid @Model.SearchedLocation</h3>
+    }
+    else
+    {
+        <h3>Visar spelningar från @fromDate till @toDate vid samtliga Debasers</h3>
+    }
+    @if (!Model.EventList.Any())
+    {
+        <p>Det fanns inga spelningar att se mellan de tidsspannen du valde</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover" id="spelningar">
+            <thead>
+                <tr>
+                    <th style="max-width: 100px;">Event</th>
+                    <th style="max-width: 100px;">Datum</th>
+                    <th style="max-width: 100px;">Åldersgräns</th>
+                    <th style="max-width: 100px;">Debaser</th>
                 </tr>
-                i++;
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @{ int i = 0; }
+                @foreach (var data in Model.EventList)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), fromDate = Model.SearchedFromDate, toDate = Model.SearchedToDate, location = Model.SearchedLocation }, null) </td>
+                        <td>@data.EventDate</td>
+                        <td>@data.Age</td>
+                        <td>@data.Venue - @data.Room</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    }
+</div>
 @section scripts
 {
-
+   @Scripts.Render("~/bundles/jqueryval")
+    
     <script>
         $(document).ready(function () {
             $("#spelningar").DataTable();
 
             $('#spelningar').on('click', 'tr', function () {
- 
+
             });
         });
 

@@ -4,12 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>@Model.Event</h1>
-    <h2 class="lead">@Model.SubHead</h2>
-    <h2> @Model.Tags </h2>
-    <p>@Model.Description</p>
-    <p><a href="@Model.TicketUrl" class="btn btn-primary btn-lg">Köp biljett &raquo;</a></p>
+<div class="jumbotron" style="background-image: url(@Model.ImageUrl); background-size: cover;">
+    <h1 style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">@Model.Event </h1>
+    <h1 style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">@Model.EventDate, @Model.Venue - @Model.Room</h1>
+    <h2 style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">@Model.SubHead</h2>
+    @if (Model.Tags.ToString() != " ")
+    {
+        <h2 style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">Genre: @Model.Tags </h2>
+    }
+    </br>
+    <p style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">@Model.Age</p>
+    <p style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">@Model.Admission</p>
+    <p style="color:white; text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;">Öppet mellan @Model.Open</p>
+
+    @if (Model.TicketUrl != "")
+    {
+        <p><a href="@Model.TicketUrl" class="btn btn-primary btn-lg">Köp biljett &raquo;</a></p>
+    }
 </div>
+<div class="jumbotron">
+    <p>@Model.Description</p>
+</div>
+
 
 
