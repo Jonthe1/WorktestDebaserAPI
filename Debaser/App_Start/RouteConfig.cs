@@ -16,7 +16,7 @@ namespace Debaser
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Debaser", action = "Search", id = UrlParameter.Optional }
+                defaults: new { controller = "Debaser", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

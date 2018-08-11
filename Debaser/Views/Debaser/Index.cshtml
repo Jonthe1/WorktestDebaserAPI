@@ -4,11 +4,31 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
-    var fromDate = Convert.ToDateTime(Model.SearchedFromDate).ToString("yyyy/MM/dd");
-    var toDate = Convert.ToDateTime(Model.SearchedToDate).ToString("yyyy/MM/dd");
-}
+    string fromDate;
+    string toDate;
+    string location;
+    if (Model.SearchedFromDate == null || Model.SearchedToDate == null)
+    {
+        fromDate = string.Empty;
+        toDate = string.Empty;
+        location = string.Empty;
+    }
+    else
+    {
+        fromDate = Convert.ToDateTime(Model.SearchedFromDate).ToString("yyyy/MM/dd");
+        toDate = Convert.ToDateTime(Model.SearchedToDate).ToString("yyyy/MM/dd");
+        if (Model.SearchedLocation.ToLower() == "malmo")
+        {
+            location = "Malmö";
+        }
+        else
+        {
+            location = Model.SearchedLocation;
 
-<div>
+        }
+    }
+}
+<div style="float: left; position:relative; width: 27%; margin-top:60px;">
     @using (Html.BeginForm("Search", "Debaser", FormMethod.Post))
     {
         <div class="form-group">
@@ -34,19 +54,23 @@
             }, "Välj Plats", new { @class = "form-control" })
             @Html.ValidationMessageFor(d => d.SearchData.Location)
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary">Sök</button>
     }
 </div>
 
-<div style="background-color:gray; width: 1000px; position: absolute; top: 100px; right: 100px;">
+<div style="float: right; width: 73%; margin-top:30px;">
 
-    @if (Model.SearchedLocation != "")
+    @if (fromDate != "" && toDate != "" && location != "")
     {
-        <h3>Visar spelningar från @fromDate till @toDate vid @Model.SearchedLocation</h3>
+        <h3>Visar spelningar från @fromDate till @toDate vid @location</h3>
+    }
+    else if (fromDate != "" && toDate != "" && location == "")
+    {
+        <h3>Visar spelningar från @fromDate till @toDate vid samtliga Debasers</h3>
     }
     else
     {
-        <h3>Visar spelningar från @fromDate till @toDate vid samtliga Debasers</h3>
+        <h3>Gör en ny sökning för att visa spelningar</h3>
     }
     @if (!Model.EventList.Any())
     {
@@ -57,10 +81,10 @@
         <table class="table table-bordered table-hover" id="spelningar">
             <thead>
                 <tr>
-                    <th style="max-width: 100px;">Event</th>
-                    <th style="max-width: 100px;">Datum</th>
-                    <th style="max-width: 100px;">Åldersgräns</th>
-                    <th style="max-width: 100px;">Debaser</th>
+                    <th>Event</th>
+                    <th>Datum</th>
+                    <th>Åldersgräns</th>
+                    <th>Debaser</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,7 +92,7 @@
                 @foreach (var data in Model.EventList)
                 {
                     <tr>
-                        <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), fromDate = Model.SearchedFromDate, toDate = Model.SearchedToDate, location = Model.SearchedLocation }, null) </td>
+                        <td>@Html.ActionLink(data.Event, "Details", "Debaser", new { id = Convert.ToInt32(data.EventId), eventDate = Convert.ToDateTime(data.EventDate), location = location }, null) </td>
                         <td>@data.EventDate</td>
                         <td>@data.Age</td>
                         <td>@data.Venue - @data.Room</td>
@@ -81,15 +105,11 @@
 </div>
 @section scripts
 {
-   @Scripts.Render("~/bundles/jqueryval")
-    
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script>
         $(document).ready(function () {
             $("#spelningar").DataTable();
-
-            $('#spelningar').on('click', 'tr', function () {
-
-            });
         });
 
     </script>

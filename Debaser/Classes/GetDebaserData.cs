@@ -17,24 +17,31 @@ namespace Debaser.Classes
             using (WebClient wc = new WebClient())
             {
                 var jsonString = wc.DownloadString("http://debaser.se/debaser/api/?version=2&method=getevents&venue=" + location + "&from=" + fromDate + "&to=" + toDate + "&format=json");
-
-                var tempDebaserData = JsonConvert.DeserializeObject<IEnumerable<DebaserData>>(jsonString);
+                IEnumerable<DebaserData> tempDebaserData;
+                try
+                {
+                    tempDebaserData = JsonConvert.DeserializeObject<IEnumerable<DebaserData>>(jsonString);
+                }
+                catch (Exception)
+                {
+                    tempDebaserData = null;
+                }
 
                 if (!Utils.IsAny(tempDebaserData)) // IF there was no data stored in debaserData, send empty list
-                    return (List<DebaserData>)debaserData;
+                    return debaserData;
 
                 debaserData = ReturnCorrectSearchedAfterData(location.ToLower(), tempDebaserData); // Populates debaserData with searched after value(s)
                 debaserData = NormalizeCollectedDataText(debaserData);
             }
-            return (List<DebaserData>)debaserData;
+            return debaserData;
         }
 
-        public static DebaserData GetDebaserDataBasedOnId(string location, string fromDate, string toDate, int id)
+        public static DebaserData GetDebaserDataBasedOnId(string location, string eventDate, int id)
         {
             DebaserData debaserData = new DebaserData();
             using (WebClient wc = new WebClient())
             {
-                var jsonString = wc.DownloadString("http://debaser.se/debaser/api/?version=2&method=getevents&venue=" + location + "&from=" + fromDate + "&to=" + toDate + "&format=json");
+                var jsonString = wc.DownloadString("http://debaser.se/debaser/api/?version=2&method=getevents&venue=" + location + "&from=" + eventDate + "&to=" + eventDate + "&format=json");
 
                 var tempDebaserData = JsonConvert.DeserializeObject<IEnumerable<DebaserData>>(jsonString);
 
