@@ -60,19 +60,20 @@ namespace Debaser.Classes
                     }
                 }
             }
-            debaserData.Description = Utils.ReplaceHTMLMarkup(debaserData.Description);
+            debaserData.Description = Utils.ReplaceHTMLMarkupAndReplaceWithSpace(debaserData.Description);
             debaserData.Tags = Utils.ReplaceSpecialCharacters(debaserData.Tags.ToString());
+            debaserData.Event = Utils.ReplaceHTMLMarkupAndReplaceWithAndSign(debaserData.Event);
             return debaserData;
         }
-
 
         // Method used to normalise data related to each event (Remove html tags from description, Remove redundant special-characters from tags)
         private static List<DebaserData> NormalizeCollectedDataText(List<DebaserData> collectedData)
         {
             foreach (var item in (collectedData))
             {
-                item.Description = Utils.ReplaceHTMLMarkup(item.Description); // Removes html markup
+                item.Description = Utils.ReplaceHTMLMarkupAndReplaceWithSpace(item.Description); // Removes html markup
                 item.Tags = Utils.ReplaceSpecialCharacters(item.Tags.ToString()); // Removes special characters
+                item.Event = Utils.ReplaceHTMLMarkupAndReplaceWithAndSign(item.Event);
             }
             return collectedData; // Returns normalized item
         }

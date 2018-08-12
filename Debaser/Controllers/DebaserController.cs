@@ -18,15 +18,17 @@ namespace Debaser.Controllers
     public class DebaserController : Controller
     {
         // Loaded when application starts
+        // Some values initiated with null so that the correct information will be displayd for the user in the view
         public ActionResult Index()
         {
-            var debaserData = new DebaserDataViewModel() {
+            var debaserData = new DebaserDataViewModel()
+            {
                 EventList = new List<DebaserData>(),
-                SearchData = new DebaserDataSearch() { FromDate = DateTime.Today, ToDate = DateTime.Today.AddMonths(1)},
+                SearchData = new DebaserDataSearch() { FromDate = DateTime.Today, ToDate = DateTime.Today.AddMonths(1) },
                 SearchedFromDate = null,
                 SearchedToDate = null
             };
-            return View(debaserData); 
+            return View(debaserData);
 
         }
 
@@ -57,7 +59,7 @@ namespace Debaser.Controllers
         {
             var detailsEventDate = Convert.ToDateTime(eventDate).ToString("yyyyMMdd", CultureInfo.InvariantCulture);
             var debaserData = GetDebaserData.GetDebaserDataBasedOnId(location, detailsEventDate, id); // Use static class method to get data previously searched for and then select the event with
-            return View(debaserData);                                                                        // the correct EventID. Uses only the eventdate chosen to minimise the datasearch. 
+            return View(debaserData);                                                                 // the correct EventID. Uses only the eventdate chosen to minimise the datasearch. 
         }
 
         private string IsAllLocationsSelected(string selection)

@@ -14,7 +14,7 @@ namespace Debaser.Classes
             return data != null && data.Any();
         }
 
-        public static string ReplaceHTMLMarkup(string input)
+        public static string ReplaceHTMLMarkupAndReplaceWithSpace(string input)
         {
             string newString;
             return input != null ? newString = Regex.Replace(input, @"<[^>]+>|&nbsp;", " ") : input;
@@ -24,6 +24,12 @@ namespace Debaser.Classes
         {
             string newString;
             return input != null ? newString = Regex.Replace(input, "[^a-zA-Z.]+", " ") : input;
+        }
+        
+        public static string ReplaceHTMLMarkupAndReplaceWithAndSign(string input)
+        {
+            string newString;
+            return input != null ? newString = Regex.Replace(input, "&amp;", "&") : input;
         }
     }
 }

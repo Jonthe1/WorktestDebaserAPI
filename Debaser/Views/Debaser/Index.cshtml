@@ -28,6 +28,7 @@
         }
     }
 }
+<!-- Form group for searching data with post method -->
 <div style="float: left; position:relative; width: 27%; margin-top:60px;">
     @using (Html.BeginForm("Search", "Debaser", FormMethod.Post))
     {
@@ -57,9 +58,9 @@
         <button type="submit" class="btn btn-primary">Sök</button>
     }
 </div>
-
+<!-- Div for displaying some headers with searched data and table with search results-->
 <div style="float: right; width: 73%; margin-top:30px;">
-
+    <!-- If selection to display correct data based on the users state in the process and choises -->
     @if (fromDate != "" && toDate != "" && location != "")
     {
         <h3>Visar spelningar från @fromDate till @toDate vid @location</h3>
@@ -68,13 +69,13 @@
     {
         <h3>Visar spelningar från @fromDate till @toDate vid samtliga Debasers</h3>
     }
-    else
+    else if (fromDate == "" && toDate == "")
     {
-        <h3>Gör en ny sökning för att visa spelningar</h3>
+        <h3>Gör en ny sökning för att visa event</h3>
     }
     @if (!Model.EventList.Any())
     {
-        <p>Det fanns inga spelningar att se mellan de tidsspannen du valde</p>
+        <p>Kunde inte hitta några event</p>
     }
     else
     {
@@ -111,6 +112,5 @@
         $(document).ready(function () {
             $("#spelningar").DataTable();
         });
-
     </script>
 }
